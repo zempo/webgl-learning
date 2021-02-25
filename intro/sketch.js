@@ -8,8 +8,15 @@ const canvasSketch = require("canvas-sketch");
 
 const settings = {
   // Make the loop animated
-  dimensions: "A4",
-  pixelsPerInch: 300,
+  // dimensions: "A4",
+  // dimensions: [12, 12],
+  // units: "in",
+  // can set high resolutions for some
+  // damn good file saving
+  // you can send some high-quality stuff to print studios
+  pixelsPerInch: 232,
+  // auto-scaling in browser
+  scaleToView: true,
   animate: true,
   // Get a WebGL canvas rather than 2D
   context: "webgl",
@@ -22,7 +29,7 @@ const sketch = ({ context }) => {
   });
 
   // WebGL background color
-  renderer.setClearColor("skyblue", 1);
+  renderer.setClearColor("#202020", 1);
 
   // Setup a camera
   const camera = new THREE.PerspectiveCamera(50, 1, 0.01, 100);
@@ -30,6 +37,7 @@ const sketch = ({ context }) => {
   camera.lookAt(new THREE.Vector3());
 
   // Setup camera controller
+  // remove if setting up an animation
   const controls = new THREE.OrbitControls(camera, context.canvas);
 
   // Setup your scene
@@ -38,10 +46,11 @@ const sketch = ({ context }) => {
   // Setup a geometry
   const geometry = new THREE.SphereGeometry(1, 32, 16);
 
+  // setup an img texture
+  const texture = new THREE.TextureLoader().load("img/pic2.png");
   // Setup a material
   const material = new THREE.MeshBasicMaterial({
-    color: "blue",
-    wireframe: true,
+    map: texture,
   });
 
   // Setup a mesh with geometry + material
